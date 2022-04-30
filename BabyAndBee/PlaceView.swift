@@ -43,11 +43,13 @@ struct PlaceView: View {
                     .font(.caption)
             }
         }.padding(8).background(.white).cornerRadius(20)
-            .accessibilityAction(named: Text("favorite")) {
+            .accessibilityAction(named: favorite ? "Unfavorite" : "Favorite") {
                 favorite = !favorite
+
+                UIAccessibility.post(notification: .screenChanged, argument: favorite ? "\(place.name) Favorited" : "\(place.name) Unfavorited")
             }
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel("\(place.name) \(place.price) \(place.dateString) \(place.distance)")
+            .accessibilityLabel("\(place.name), \(place.price), \(place.dateString), \(place.distance)" + (favorite ? "Favorited" : ""))
 
     }
 }
